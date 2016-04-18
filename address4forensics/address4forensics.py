@@ -43,11 +43,8 @@ address4forensics -L|-P|-C [–b offset] [-B [-s bytes]] [-l address] [-p addres
 """
 
 from argparse import ArgumentParser
-"""
-logical_address(arguments.partition_start, arguments.logical_known, arguments.cluster_known, arguments.physical_known,
-                            arguments.cluster_size, arguments.reserved, arguments.fat_tables, arguments.fat_length, arguments.sector_size,
-                            arguments.byte_address)
-"""
+
+
 def logical_address(partition_start=0, logical_known=None, cluster_known=None, physical_known=None,
                       cluster_size=None, reserved=None, fat_tables=2, fat_length=None,
                       sector_size=512, byte_address=None):
@@ -77,11 +74,7 @@ def logical_address(partition_start=0, logical_known=None, cluster_known=None, p
     else:
         return 'Error: Missing Arguments'
 
-"""
-physical_address(arguments.partition_start, arguments.logical_known, arguments.cluster_known, arguments.physical_known,
-                             arguments.cluster_size, arguments.reserved, arguments.fat_tables, arguments.fat_length, arguments.sector_size,
-                             arguments.byte_address)
-"""
+
 def physical_address(partition_start=0, logical_known=None, cluster_known=None, physical_known=None,
                        cluster_size=None, reserved=None, fat_tables=2, fat_length=None,
                        sector_size=512, byte_address=None):
@@ -110,10 +103,7 @@ def physical_address(partition_start=0, logical_known=None, cluster_known=None, 
     else:
         return 'Error: Missing Arguments'
 
-"""
-cluster_address(arguments.partition_start, arguments.logical_known, arguments.cluster_known, arguments.physical_known,
-                            arguments.cluster_size, arguments.reserved, arguments.fat_tables, arguments.fat_length)
-"""
+
 def cluster_address(partition_start=0, logical_known=None, cluster_known=None, physical_known=None,
                       cluster_size=None, reserved=None, fat_tables=2, fat_length=None):
     """
@@ -128,6 +118,7 @@ def cluster_address(partition_start=0, logical_known=None, cluster_known=None, p
         return (physical_known - partition_start - (reserved + fat_tables * fat_length))//(cluster_size+2)
     else:
         return 'Error: Missing Arguments'
+
 
 def address4forensics(arguments):
     """
