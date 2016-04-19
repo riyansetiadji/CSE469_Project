@@ -46,36 +46,36 @@ def calculate_time(text_file=None, hex_val=None):
 	"""
 
 	#If text file is given
-    if text_file:
-    	#Read the input file
-    	#Get the first line and convert it to binary
-        input_file  = open(text_file,"r").readlines()[0].strip()
-        binary_rep = bin(int(input_file, 16))[2:].zfill(16)
-        return main_conversion_function(binary_rep)
-    #if the hex value is given
-    elif hex_val:
-        #Convert the hex into binary
-        binary_rep = bin(int(hex_val, 16))[2:].zfill(16)
-        return main_conversion_function(binary_rep)
-    else:
-        return "Error: Invalid Arguments"
+	if text_file:
+		#Read the input file
+		#Get the first line and convert it to binary
+	    input_file  = open(text_file,"r").readlines()[0].strip()
+	    binary_rep = bin(int(input_file, 16))[2:].zfill(16)
+	    return main_conversion_function(binary_rep)
+	#if the hex value is given
+	elif hex_val:
+	    #Convert the hex into binary
+	    binary_rep = bin(int(hex_val, 16))[2:].zfill(16)
+	    return main_conversion_function(binary_rep)
+	else:
+	    return "Error: Invalid Arguments"
 
 
 def calculate_date(text_file=None, hex_val=None):
 	"""
 	If the arguments is to get date
 	"""
-    if text_file:
-        # If a text file is given as input, then read only one hex value and convert it into binary.
-        input_file = open(text_file,"r").readlines()[0].strip()
-        binary_rep = bin(int(input_file, 16))[2:].zfill(16)
-        return main_conversion_function(binary_rep, False)
-    elif hex_val:
-        # If a hex value is given as input, send it to main_conversion_function. No need to read from a file.
-        binary_rep = bin(int(hex_val, 16))[2:].zfill(16)
-        return main_conversion_function(binary_rep, False)
-    else:
-        return 'Invalid arguments. Must provide either -f or -x.'
+	if text_file:
+	    # If a text file is given as input, then read only one hex value and convert it into binary.
+	    input_file = open(text_file,"r").readlines()[0].strip()
+	    binary_rep = bin(int(input_file, 16))[2:].zfill(16)
+	    return main_conversion_function(binary_rep, False)
+	elif hex_val:
+	    # If a hex value is given as input, send it to main_conversion_function. No need to read from a file.
+	    binary_rep = bin(int(hex_val, 16))[2:].zfill(16)
+	    return main_conversion_function(binary_rep, False)
+	else:
+	    return 'Invalid arguments. Must provide either -f or -x.'
 
 
 def main_conversion_function(binary_string=None, is_time=True):
@@ -85,31 +85,31 @@ def main_conversion_function(binary_string=None, is_time=True):
 	"""
 
 	#Little endian
-    little_endian = binary_string[8:16] + binary_string[0:8]
+	little_endian = binary_string[8:16] + binary_string[0:8]
 
-    # Time
-    if is_time:
-        # Get the hour, minute, and second from the little endian
-        second = int(little_endian[11:16], 2)*2
-        minute = int(little_endian[5:11], 2)
-        hour = int(little_end[ian0:5], 2)
+	# Time
+	if is_time:
+	    # Get the hour, minute, and second from the little endian
+	    second = int(little_endian[11:16], 2)*2
+	    minute = int(little_endian[5:11], 2)
+	    hour = int(little_endian[0:5], 2)
 
-        if hour >= 24 or minute >= 60 or second >= 60:
-            print 'Error: Invalid Time Format'
-        else:
-        	date_format =  datetime.strptime(str(hour)+":"+str(minute)+":"+str(second), "%H:%M:%S")
-        	return "Time: " + str(date_format.strftime("%I:%M:%S %p"))
-    #Date
-    else:
-    	#Get the day, month, and year from the little endian
-        day = int(little_endian[11:16], 2)
-        month = int(little_endian[7:11], 2)
-        year = int(little_endian[0:7], 2) + 1980
+	    if hour >= 24 or minute >= 60 or second >= 60:
+	        print 'Error: Invalid Time Format'
+	    else:
+	    	date_format =  datetime.strptime(str(hour)+":"+str(minute)+":"+str(second), "%H:%M:%S")
+	    	return "Time: " + str(date_format.strftime("%I:%M:%S %p"))
+	#Date
+	else:
+		#Get the day, month, and year from the little endian
+	    day = int(little_endian[11:16], 2)
+	    month = int(little_endian[7:11], 2)
+	    year = int(little_endian[0:7], 2) + 1980
 
-        if day > 31 or month > 12 or year > 127+1980:
-            return 'Error: Invalid Date Format'
-        else:
-            return 'Date: ' + str(int_to_month(month)) + ' ' + str(day) + ', ' + str(year)
+	    if day > 31 or month > 12 or year > 127+1980:
+	        return 'Error: Invalid Date Format'
+	    else:
+	        return 'Date: ' + str(int_to_month(month)) + ' ' + str(day) + ', ' + str(year)
 
 
 def mac_conversion(arguments):
